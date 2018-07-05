@@ -32,6 +32,9 @@ RUN apt-get update && apt-get install -y ros-kinetic-desktop-full ros-kinetic-nm
 RUN apt-get update && apt-get install -y ros-kinetic-controller-manager ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-gazebo-ros-control ros-kinetic-joystick-drivers
 RUN apt-get update && apt-get install -y libnlopt-dev freeglut3-dev qtbase5-dev libqt5opengl5-dev libssh2-1-dev libarmadillo-dev libpcap-dev gksu libgl1-mesa-dev libglew-dev python-wxgtk3.0 software-properties-common libmosquitto-dev libyaml-cpp-dev python-flask python-requests
 
+# drselee: my additional packages.
+RUN apt-get update && apt-get install -y python-roscpp-msgs libroscpp-dev libroscpp-msgs-dev libroscpp-core-dev
+
 # Add basic user
 ENV USERNAME autoware
 ENV PULSE_SERVER /run/pulse/native
@@ -83,3 +86,8 @@ RUN gconftool-2 --set "/apps/gnome-terminal/profiles/Default/background_color" -
 
 # Default CMD
 CMD ["/bin/bash"]
+
+# Download the demo data.
+RUN cd && mkdir demo_data
+RUN cd ~/demo_data && wget https://www.autoware.ai/sample/sample_moriyama_data.tar.gz
+RUN cd ~/demo_data && wget https://www.autoware.ai/sample/sample_moriyama_150324.tar.gz
